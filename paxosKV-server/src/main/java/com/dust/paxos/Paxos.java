@@ -9,16 +9,9 @@ import java.util.Set;
 
 import com.dust.net.PaxosNetNode;
 import com.dust.paxos.conf.PaxosConfiguration;
-import com.dust.paxos.core.Acceptor;
-import com.dust.paxos.core.Learner;
-import com.dust.paxos.core.Proposer;
-import com.dust.paxos.core.impl.DAcceptor;
-import com.dust.paxos.core.impl.DLearner;
-import com.dust.paxos.core.impl.DProposer;
-
-import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Paxos组件核心
