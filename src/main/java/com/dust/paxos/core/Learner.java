@@ -1,4 +1,4 @@
-package com.dust.kv.core;
+package com.dust.paxos.core;
 
 public interface Learner {
 
