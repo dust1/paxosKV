@@ -9,6 +9,13 @@ import java.util.Set;
 
 import com.dust.net.PaxosNetNode;
 import com.dust.paxos.conf.PaxosConfiguration;
+import com.dust.paxos.core.Acceptor;
+import com.dust.paxos.core.Learner;
+import com.dust.paxos.core.Proposer;
+import com.dust.paxos.core.impl.DAcceptor;
+import com.dust.paxos.core.impl.DLearner;
+import com.dust.paxos.core.impl.DProposer;
+
 import io.vertx.core.eventbus.EventBus;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,11 +39,23 @@ public class Paxos {
     //目前为止所有位于Paxos中的哈希值
     private Set<String> totalHashSet;
 
+    /**
+     * 三个核心组件
+     */
+    private Acceptor acceptor;
+    private Proposer proposer;
+    private Learner learner;
+
     public Paxos(PaxosConfiguration conf, EventBus eventBus) {
         this.configuration = conf;
         this.eventBus = eventBus;
+        //TODO 这里是否需要改成hashMap
         this.hashList = new ArrayList<>();
         this.totalHashSet = new HashSet<>();
+
+        this.acceptor = new DAcceptor(this);
+        this.proposer = new DProposer(this);
+        this.learner = new DLearner(this);
 
         Paxos.log.info("Paxos Server created, config info:[" + configuration.toString() + "]");
     }
@@ -91,7 +110,6 @@ public class Paxos {
      */
     public void ready() {
         Paxos.log.info("Paxos Server are start ready. id:[" + configuration.getId() + "]");
-        
     }
 
     /**
