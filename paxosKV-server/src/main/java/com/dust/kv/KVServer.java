@@ -3,6 +3,7 @@ package com.dust.kv;
 import java.util.List;
 
 import com.dust.kv.conf.ServerConfig;
+import com.dust.kv.core.CentralNervousSystem;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.json.Json;
@@ -25,13 +26,13 @@ public class KVServer extends AbstractVerticle {
         //这里应该从配置信息中读取到master节点，并从master节点获取到自身的哈希分布情况
         vertx.fileSystem().readFile("./conf/setting.json", res -> {
             if (res.succeeded()) {
+                CentralNervousSystem.init(vertx);
                 ServerConfig serverConfig = Json.decodeValue(res.result(), ServerConfig.class);
                 NetServer server = vertx.createNetServer();
-                //这里可以修改为工厂设计模式？
                 ServerHandler socketHandler = ServerHandler.create(serverConfig);
-
+                
                 /**
-                 * 几个主要的处理器
+                 * 几个主要的处理器，其中connectHandler每次新建立连接的时候都会调用一次
                  */
                 server.connectHandler(socketHandler::handler);
                 server.exceptionHandler(socketHandler::exceptionHandler);
@@ -39,13 +40,12 @@ public class KVServer extends AbstractVerticle {
 
                 server.listen(serverConfig.getPort(), serverConfig.getHost(), serverRes -> {
                     if (serverRes.succeeded()) {
-                        System.out.println("Server is new listining");
+                        KVServer.log.info("Server is new listining");
                     } else {
-                        System.out.println("Failed to bind!");
+                        KVServer.log.error("Failed to bind!");
                         serverRes.cause().printStackTrace();
                     }
                 });
-                
             } else {
                 KVServer.log.error("can't find ./conf/setting.json, please create it");
             }

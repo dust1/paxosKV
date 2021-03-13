@@ -2,6 +2,8 @@ package com.dust.kv.conf;
 
 import java.util.List;
 
+import com.dust.paxos.conf.PaxosConfiguration;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +17,12 @@ public class ServerConfig {
     private int port;
     private String host;
     private String uuid;
-    private List<MasterInfo> others;
+    private List<MasterInfo> master;
+
+    public PaxosConfiguration tPaxosConfiguration() {
+        PaxosConfiguration conf = new PaxosConfiguration();
+        conf.setId(uuid);
+        return conf;
+    }
 
 }

@@ -28,10 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 public class Paxos {
 
     private PaxosConfiguration configuration;
-
-    //消息神经主线
-    private EventBus eventBus;
-
     private static final String PAXOS_START = "paxos.";
 
     //哈希地址
@@ -46,9 +42,8 @@ public class Paxos {
     private Proposer proposer;
     private Learner learner;
 
-    public Paxos(PaxosConfiguration conf, EventBus eventBus) {
+    public Paxos(PaxosConfiguration conf) {
         this.configuration = conf;
-        this.eventBus = eventBus;
         //TODO 这里是否需要改成hashMap
         this.hashList = new ArrayList<>();
         this.totalHashSet = new HashSet<>();

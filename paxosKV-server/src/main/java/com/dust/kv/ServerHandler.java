@@ -3,6 +3,7 @@ package com.dust.kv;
 import com.dust.kv.conf.ServerConfig;
 
 import io.vertx.core.AsyncResult;
+import io.vertx.core.Vertx;
 import io.vertx.core.net.NetSocket;
 
 /**

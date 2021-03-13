@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class PaxosConfiguration {
 
-    private int id;
-    
+    private String id;
+
     @Override
     public String toString() {
         //TODO 重载toString方法，用于展示配置信息
