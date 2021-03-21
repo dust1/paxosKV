@@ -3,6 +3,7 @@ package com.dust.kv.core;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.dust.kv.message.MessageHandler;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 

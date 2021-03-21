@@ -2,20 +2,22 @@ package com.dust.kv;
 
 import com.dust.kv.conf.ServerConfig;
 
+import com.dust.kv.core.HttpRouterHandler;
+import io.netty.handler.codec.http.HttpRequest;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.net.NetSocket;
 
 /**
  * 处理请求的处理器
  */
-public interface ServerHandler {
+public interface HttpHandler {
 
     /**
-     * 处理正常网络Socket
-     * @param socket
+     * 返回Http路由处理器
      */
-    void handler(NetSocket socket);
+    HttpRouterHandler handler();
 
     /**
      * 当server链接发生异常的情况
@@ -29,8 +31,8 @@ public interface ServerHandler {
      */
     void closeHandler(AsyncResult<Void> v);
 
-    static ServerHandler create(ServerConfig serverConfig) {
-        return new ServerV1Handler(serverConfig);
+    static HttpHandler create(ServerConfig serverConfig) {
+        return new HttpV1Handler(serverConfig);
     } 
 
 }

@@ -1,10 +1,18 @@
 package com.dust.kv;
 
 import com.dust.kv.conf.ServerConfig;
+import com.dust.kv.core.HttpRouterHandler;
+import com.dust.kv.core.HttpRouterHandlerImpl;
 import com.dust.kv.core.KVServerHandler;
+import com.dust.kv.message.MessageHandler;
 import com.dust.paxos.Paxos;
 
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.util.internal.MathUtil;
 import io.vertx.core.AsyncResult;
+import io.vertx.core.MultiMap;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.NetSocket;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * 默认的连接处理器
  */
 @Slf4j
-public class ServerV1Handler implements ServerHandler {
+public class HttpV1Handler implements HttpHandler {
 
     /**
      * 总体配置
@@ -20,30 +28,30 @@ public class ServerV1Handler implements ServerHandler {
     private ServerConfig serverConfig;
     private Paxos paxos;
     private KVServerHandler handler;
+    private MessageHandler messageHandler;
 
-    public ServerV1Handler(ServerConfig serverConfig) {
+    public HttpV1Handler(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;
         this.paxos = new Paxos(serverConfig.tPaxosConfiguration());
         this.handler = new KVServerHandler(paxos);
+        this.messageHandler = new MessageHandler();
     }
 
     @Override
-    public void handler(NetSocket socket) {
-        //当一个新的连接进入的时候要执行什么呢？
-        
-        // socket.handler(arg0)
+    public HttpRouterHandler handler() {
+        return new HttpRouterHandlerImpl();
     }
 
     @Override
     public void exceptionHandler(Throwable throwable) {
-        ServerV1Handler.log.error("Net Connect error, Server was down.");
+        log.error("Net Connect error, Server was down.");
         throwable.getCause().printStackTrace();
     }
 
     @Override
     public void closeHandler(AsyncResult<Void> v) {
         //当连接断开后会发生什么？
-        ServerV1Handler.log.info("Server was closed");
+        log.info("Server was closed");
     }
     
 }

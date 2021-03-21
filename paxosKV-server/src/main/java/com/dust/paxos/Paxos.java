@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import com.dust.net.PaxosNetNode;
 import com.dust.paxos.conf.PaxosConfiguration;
 import com.dust.paxos.core.Acceptor;
 import com.dust.paxos.core.Learner;
@@ -55,36 +54,36 @@ public class Paxos {
         Paxos.log.info("Paxos Server created, config info:[" + configuration.toString() + "]");
     }
 
-    /**
-     * 给Paxos添加网络节点
-     * 这里的添加是动态添加，初始化的时候会初始化所有数据的备份节点信息
-     * 但是当某个节点宕机后需要修改网络节点。
-     * 否则一致性请求会失败
-     * @param node
-     */
-    public void addNetNode(PaxosNetNode node) {
-        Paxos.log.info("Paxos Server addNetNode, node info:[" + node.toString() + "]");
-        //TODO 追加网络节点
-    }
-
-    /**
-     * 批量添加网络节点
-     * @param nodes
-     */
-    public void addNetnodes(List<PaxosNetNode> nodes)  {
-        for (PaxosNetNode node : nodes) {
-            addNetNode(node);
-        }
-    }
-
-    /**
-     * 移除某个网络节点
-     * @param node
-     */
-    public void removeNetNode(PaxosNetNode node) {
-        Paxos.log.warn("Paxos Server removeNetNode, node info:[" + node.toString() + "]");
-        //TODO 移除网络节点
-    }
+//    /**
+//     * 给Paxos添加网络节点
+//     * 这里的添加是动态添加，初始化的时候会初始化所有数据的备份节点信息
+//     * 但是当某个节点宕机后需要修改网络节点。
+//     * 否则一致性请求会失败
+//     * @param node
+//     */
+//    public void addNetNode(PaxosNetNode node) {
+//        Paxos.log.info("Paxos Server addNetNode, node info:[" + node.toString() + "]");
+//        //TODO 追加网络节点
+//    }
+//
+//    /**
+//     * 批量添加网络节点
+//     * @param nodes
+//     */
+//    public void addNetnodes(List<PaxosNetNode> nodes)  {
+//        for (PaxosNetNode node : nodes) {
+//            addNetNode(node);
+//        }
+//    }
+//
+//    /**
+//     * 移除某个网络节点
+//     * @param node
+//     */
+//    public void removeNetNode(PaxosNetNode node) {
+//        Paxos.log.warn("Paxos Server removeNetNode, node info:[" + node.toString() + "]");
+//        //TODO 移除网络节点
+//    }
 
     /**
      * 给这个存储节点添加哈希
