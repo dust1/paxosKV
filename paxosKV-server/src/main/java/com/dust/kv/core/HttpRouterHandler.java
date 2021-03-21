@@ -6,4 +6,9 @@ public interface HttpRouterHandler {
 
     void appendToken(RoutingContext context);
 
+    void get(RoutingContext context);
+
+    void prepare(RoutingContext context);
+
+    void accept(RoutingContext context);
 }

@@ -11,4 +11,19 @@ public class HttpRouterHandlerImpl implements HttpRouterHandler {
 
     }
 
+    @Override
+    public void get(RoutingContext context) {
+
+    }
+
+    @Override
+    public void prepare(RoutingContext context) {
+
+    }
+
+    @Override
+    public void accept(RoutingContext context) {
+
+    }
+
 }
